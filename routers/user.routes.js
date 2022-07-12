@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const data = require("../data");
 const { v4: uuid } = require("uuid");
-const { application } = require("express");
 
 //CREATE
 
@@ -16,6 +15,8 @@ router.post("/create-user", (req, res) => {
 router.get("/read-user", (req, res) => {
   res.status(200).json({ data });
 });
+
+//READ details
 
 router.get("/details-user/:id", (req, res) => {
   const { id } = req.params;
@@ -38,6 +39,20 @@ router.put("/edit-user/:id", (req, res) => {
 
 //DELETE
 
-// router.delete();
+router.delete("/delete-user/:id", (req, res) => {
+  const { id } = req.params;
+
+  const doc = data.filter((currentDoc) => currentDoc.id === id);
+
+  const index = data.indexOf(doc[0]);
+
+  data.splice(index, 1);
+
+  res
+    .status(200)
+    .json({ message: `ID: ${id} successfully deleted!`, data: data });
+  //   console.log(doc[0]);
+  //   console.log(index);
+});
 
 module.exports = router;
