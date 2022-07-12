@@ -23,6 +23,21 @@ router.get("/details-user/:id", (req, res) => {
   res.status(200).json(document[0]);
 });
 
-module.exports = router;
-
 //UPDATE
+
+router.put("/edit-user/:id", (req, res) => {
+  const { id } = req.params;
+  data.forEach((currentDoc, i) => {
+    if (currentDoc.id === id) {
+      data[i] = { ...req.body, id: currentDoc.id };
+    }
+  });
+  const newDoc = data.filter((currentDoc) => currentDoc.id === id);
+  res.status(200).json(newDoc[0]);
+});
+
+//DELETE
+
+// router.delete();
+
+module.exports = router;
